@@ -1,19 +1,19 @@
 "use client";
 
 import { useScrollTop } from "@/hooks/use-scroll-top";
-// import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignInButton } from "@clerk/clerk-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { ModeToggle } from "@/components/mode-toggle";
-// import { useConvexAuth } from "convex/react";
-// import { Button } from "@/components/ui/button";
+import { useConvexAuth } from "convex/react";
+import { Button } from "@/components/ui/button";
 // import { Spinner } from "@/components/spinner";
 // import { Link } from "lucide-react";
 // import { SWRConfig } from 'swr';
 
 
 export const Navbar = () =>{
-    // const { isAuthenticated, isLoading } = useConvexAuth();
+    const { isAuthenticated, isLoading } = useConvexAuth();
     const scrolled=useScrollTop();
     return(
         <div className={cn(
@@ -22,8 +22,8 @@ export const Navbar = () =>{
         )}>
             <Logo />
             <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
-                {/* {isLoading && (
-                    <Spinner />
+                {isLoading && (
+                    <p>Loading...</p>
                 )}
                 {!isAuthenticated && !isLoading && (
                     <>
@@ -39,7 +39,7 @@ export const Navbar = () =>{
                         </SignInButton>
                     </>
                 )}
-                {isAuthenticated && !isLoading && (
+                {/* {isAuthenticated && !isLoading && (
                     <>
                     <Button variant={"ghost"} size={"sm"} asChild>
                         <Link href="/documents">
