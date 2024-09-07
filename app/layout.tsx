@@ -1,8 +1,12 @@
+
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
+// import { SWRConfig } from 'swr';
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,7 +48,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="inkly-theme">
             {children}
           </ThemeProvider>
-        </ConvexClientProvider>
+        </ConvexClientProvider>  
       </body>
     </html>
   );
