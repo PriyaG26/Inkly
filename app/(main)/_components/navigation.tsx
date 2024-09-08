@@ -1,7 +1,8 @@
 "use client";
 
-import { ChevronsLeft } from "lucide-react";
+import { ChevronsLeft, PlusCircle } from "lucide-react";
 import { UserItem } from "./user-item";
+import { Item } from "./item";
 
 export const Navigation = () =>{
     return (
@@ -12,6 +13,7 @@ export const Navigation = () =>{
                 </div>
                 <div>
                     <UserItem />
+                    <Item onClick={()=> {}} label="New Page" icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
                     <p>Documents</p>
