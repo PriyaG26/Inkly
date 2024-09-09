@@ -11,7 +11,19 @@ import {
     Plus,
     Trash,
   } from "lucide-react";
-
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
+    DropdownMenuItem,
+  } from "@/components/ui/dropdown-menu";
+  
+import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
+import { useUser } from "@clerk/clerk-react";
 interface ItemProps{
     id?:Id<"documents">
     documentIcon?: string;
@@ -21,7 +33,7 @@ interface ItemProps{
   level?: number;
   onExpand?: () => void;
     label:string;
-    onClick:()=>void;
+    onClick?:()=>void;
     icon:LucideIcon;
 };
 
@@ -37,7 +49,49 @@ export const Item =({
   level = 0,
   onExpand,
 }: ItemProps) => {
+
     const ChevronIcon = expanded ? ChevronDown : ChevronRight;
+    const create = useMutation(api.documents.create);
+    const archive = useMutation(api.documents.archive);
+    const router = useRouter();
+    const { user } = useUser();
+    const handleExpand = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      event.stopPropagation();
+      onExpand?.();
+    }
+
+    const onCreate =(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      event.stopPropagation();
+  
+      if (!id) return;
+  
+      const promise = create({ title: "Untitled", parentDocument: id }).then(
+        (documentId) => {
+          if (!expanded) {
+            onExpand?.();
+          }
+          // router.push(`/documents/${documentId}`);
+        }
+      );
+      toast.promise(promise, {
+        loading: "Creating a new note...",
+        success: "New note created.",
+        error: "Failed to create a new note.",
+      });
+    }
+
+    const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      event.stopPropagation();
+      if (!id) return;
+  
+      const promise = archive({ id }).then(() => router.push("/documents"));
+  
+      toast.promise(promise, {
+        loading: "Moving to trash...",
+        success: "Note moved to trash.",
+        error: "Failed to archive note.",
+      });
+    }
 
     return (
         <div onClick={onClick}
@@ -70,6 +124,41 @@ export const Item =({
           <span className="text-xs">Ctrl K</span>
         </kbd>
       )}
+      {!!id && (
+        <div className="ml-auto flex items-center gap-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+              <div
+                role="button"
+                className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+              >
+                <MoreHorizontal className="w-h h-4 text-muted-foreground" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-60"
+              align="start"
+              side="right"
+              forceMount
+            >
+              <DropdownMenuItem onClick={onArchive} className="cursor-pointer">
+                <Trash className="h-4 w-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className="text-sm text-muted-foreground p-2">
+                Last edited by: {user?.fullName}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div
+            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+            role="button"
+            onClick={onCreate}
+          >
+            <Plus className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </div>)}
         </div>
     )
 }

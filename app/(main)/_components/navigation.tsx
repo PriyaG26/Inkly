@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, Trash, PlusCircle, Search, Settings } from "lucide-react";
 import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { useMutation } from "convex/react";
@@ -10,6 +10,12 @@ import { DocumentList } from "./document-list";
 import { ElementRef, useRef, useState, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import TrashBox from "./trashBox";
 
 export const Navigation = () =>{
     const create=useMutation(api.documents.create);
@@ -119,12 +125,22 @@ export const Navigation = () =>{
                 </div>
                 <div>
                     <UserItem />
-                    <Item label="Search" icon={Search} isSearch onClick={searchOpen} />
-                    <Item label="Settings" icon={Settings} onClick={settingsOpen} />
+                    <Item label="Settings" icon={Settings} onClick={() => {}} />
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
                     <DocumentList  />
+                    <Item onClick={handleCreate} icon={Plus} label="Add a page" />
+                      <Popover>
+                        <PopoverTrigger className="w-full mt-4">
+                          <Item label="Trash" icon={Trash} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                          side={isMobile ? "bottom" : "right"}
+                          className="p-0 w-72">
+                          <TrashBox />
+                        </PopoverContent>
+                      </Popover>
                 </div>
                 <div
           onMouseDown={handleMouseDown}
