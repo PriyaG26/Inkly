@@ -10,6 +10,8 @@ import { DocumentList } from "./document-list";
 import { ElementRef, useRef, useState, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useSettings } from "@/hooks/useSettings";
+import {Navbar} from "./Navbar";
 import {
   Popover,
   PopoverTrigger,
@@ -18,6 +20,8 @@ import {
 import TrashBox from "./trashBox";
 
 export const Navigation = () =>{
+  const settings = useSettings();
+  const params = useParams();
     const create=useMutation(api.documents.create);
     const handleCreate = () =>{
         const promise=create({title:"Untitled"});
@@ -125,7 +129,7 @@ export const Navigation = () =>{
                 </div>
                 <div>
                     <UserItem />
-                    <Item label="Settings" icon={Settings} onClick={() => {}} />
+                    <Item label="Settings" icon={Settings} onClick={settings.onOpen} />
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
@@ -156,8 +160,19 @@ export const Navigation = () =>{
           isMobile && "left-0 w-full"
         )}
       >
-        <nav className="bg-transparent px-3 py-2 w-full" />
-        {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="h-6 w-6 text-muted-foreground" />}
+        {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetWidth}
+                className="h-6 w-6 text-muted-foreground"
+                role="button"
+              />
+            )}
+          </nav>
+        )}
       </div>
         </>
     )
