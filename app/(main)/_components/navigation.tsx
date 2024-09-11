@@ -18,13 +18,15 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import TrashBox from "./trashBox";
+import DocumentId from "../(routes)/documents/[documentId]/page";
 
 export const Navigation = () =>{
   const settings = useSettings();
   const params = useParams();
+  const router = useRouter();
     const create=useMutation(api.documents.create);
     const handleCreate = () =>{
-        const promise=create({title:"Untitled"});
+        const promise=create({title:"Untitled"}).then((documentId)=>router.push(`/documents/${documentId}`))
         toast.promise(promise,{
             loading:"Creating a new note...",
             success: "New Note created!",
