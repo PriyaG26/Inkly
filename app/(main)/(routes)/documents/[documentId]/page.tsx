@@ -5,7 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMemo } from "react";
-// import Toolbar from "@/components/Toolbar";
+// import Editor from "@/components/Editor";
 import dynamic from "next/dynamic";
 
 interface DocumentIdPageProps {
@@ -15,10 +15,10 @@ interface DocumentIdPageProps {
 }
 
 export default function DocumentId({ params }: DocumentIdPageProps) {
-//   const Editor = useMemo(
-//     () => dynamic(() => import("@/components/Editor"), { ssr: false }),
-//     []
-//   );
+  const Editor = useMemo(
+    () => dynamic(() => import("@/components/Editor"), { ssr: false }),
+    []
+  );
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });
