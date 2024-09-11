@@ -1,6 +1,6 @@
 "use client";
 
-import { ImageIcon, Smile, X } from "lucide-react";
+import { Smile, X } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import { Button } from "./ui/button";
 import { ElementRef, useRef, useState } from "react";

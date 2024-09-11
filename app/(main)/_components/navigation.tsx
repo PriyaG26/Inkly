@@ -52,6 +52,9 @@ export const Navigation = () =>{
     if (isMobile) {
       collapse();
     }
+    else {
+      resetWidth();
+    }
   }, [pathname, isMobile]);
 
   const handleMouseDown=(event: React.MouseEvent<HTMLDivElement, MouseEvent> ) => {
