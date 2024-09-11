@@ -6,7 +6,6 @@ import { Id } from "@/convex/_generated/dataModel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMemo } from "react";
 import Toolbar from "@/components/ToolBar";
-import Editor from "@/components/Editor";
 import CoverImage from "@/components/CoverImage";
 import dynamic from "next/dynamic";
 

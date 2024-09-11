@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, Trash, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, Trash, PlusCircle, Settings } from "lucide-react";
 import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { useMutation } from "convex/react";
@@ -18,7 +18,6 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import TrashBox from "./trashBox";
-import DocumentId from "../(routes)/documents/[documentId]/page";
 
 export const Navigation = () =>{
   const settings = useSettings();

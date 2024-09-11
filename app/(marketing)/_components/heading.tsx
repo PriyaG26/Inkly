@@ -1,10 +1,6 @@
 "use-client";
-import { useConvexAuth } from "convex/react";
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button";
-import { SignInButton } from "@clerk/clerk-react";
-import { Spinner } from "@/components/spinner";
-import Link from "next/link";
 
 
 export const Heading =()=>{

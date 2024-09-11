@@ -17,7 +17,6 @@ interface IconPickerProps {
 export default function IconPicker({
   onChange,
   children,
-  asChild,
 }: IconPickerProps) {
   const { resolvedTheme } = useTheme();
   const themeMap = {
