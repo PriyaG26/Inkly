@@ -2,7 +2,6 @@
 
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useCoverImage } from "@/hooks/useCoverImage";
-import { ImageDropzone } from "@/components/ImageDropzone";
 import { useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "convex/react";
@@ -51,12 +50,6 @@ export default function CoverImageModal() {
         <DialogHeader>
           <h2 className="text-center text-lg font-semibold">Cover Image</h2>
         </DialogHeader>
-        <ImageDropzone
-          className="w-full outline-none"
-          disabled={isSubmitting}
-          value={file}
-          onChange={onChange}
-        />
       </DialogContent>
     </Dialog>
   );
